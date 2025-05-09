@@ -1,17 +1,18 @@
 services:
   frontend:
-    build: ./frontend
+    build: ./Frontend
     ports:
       - "80:80"
     restart: unless-stopped
 
   backend:
-    build: ./backend
+    build: ./Backend
     ports:
       - "8000:8000"
+    environment:
+      - PORT=8000  
     restart: unless-stopped
 
-# Опционально, если сервисы должны общаться:
 networks:
   default:
     name: app-network
