@@ -67,7 +67,7 @@ function App() {
 
     try {
       const response = await axios.post(
-        'http://localhost:8000/generate-images/',
+        'https://greentensor.ru/api/generate-images/',
         params,
         { responseType: 'arraybuffer' }
       );
@@ -117,7 +117,12 @@ function App() {
       <header className="App-header">
         <h1>Green Tensor Image Generator</h1>
       </header>
-
+      <a href="https://greentensor.ru/api/docs"
+         target="_blank"
+         rel="noopener noreferrer"
+         className="docs-link">
+         Документация по API
+      </a>
       <div className="container">
         <form onSubmit={handleGenerate}>
         <div className="form-group">

@@ -10,7 +10,12 @@ from pydantic import BaseModel, Field
 from typing import List
 import zipfile
 
-app = FastAPI(title="Green Tensor Image Generator")
+app = FastAPI(
+    title="Green Tensor Image Generator",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
+    version="1.0.0"
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -39,7 +44,7 @@ class LensParameters(BaseModel):
     plot_type: str = Field("both", description="Типы изображений для генерации - 'line', 'polar' или 'both'", 
                           pattern="^(line|polar|both)$")
 
-@app.post("/generate-images/")
+@app.post("/api/generate-images/")
 async def generate_images(params: LensParameters):
     try:
         lens = Lens(params.radiusRatio, params.layers_count, params.norm_radii, params.dielectric_constants, params.magnetic_permeabilities)
@@ -81,10 +86,3 @@ async def generate_images(params: LensParameters):
                 "message": getattr(e, "message", str(e))
             }
         )
-
-@app.get("/")
-async def read_root():
-    return {
-        "message": "Добро пожаловать в генератор изображений линз",
-        "instructions": "Документация: /docs",
-    }
